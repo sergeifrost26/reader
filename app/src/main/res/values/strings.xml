@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Читалка комментариев</string>
+    <string name="service_desc">Читает текст комментариев в окне TikTok LIVE и озвучивает их. Ничего никуда не отправляет.</string>
+</resources>
