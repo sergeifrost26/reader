@@ -19,7 +19,8 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
         // Если читает лишнее или пропускает - меняй эти числа.
         const val TOP_MIN = 0.40f   // ниже 40% высоты
         const val RIGHT_MAX = 0.80f // левее 80% ширины
-
+        
+        val SKIP_WORDS = listOf("присоедин", "joined", "вошел в", "вошёл в", "зашел в", "зашёл в")
         val BLACKLIST = setOf(
             "подписаться", "follow", "share", "поделиться", "live", "комментарий",
             "добавить комментарий", "add comment", "say something...", "gift", "подарок"
@@ -96,6 +97,8 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (t.length < 2) return false
         if (t.all { it.isDigit() || !it.isLetterOrDigit() }) return false
         if (t.lowercase() in BLACKLIST) return false
+        val low = t.lowercase()
+        if (SKIP_WORDS.any { low.contains(it) }) return false
         return true
     }
 
