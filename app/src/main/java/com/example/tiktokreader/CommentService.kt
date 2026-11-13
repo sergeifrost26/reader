@@ -38,6 +38,7 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         ready = status == TextToSpeech.SUCCESS
+        tts?.setAudioAttributes(android.media.AudioAttributes.Builder().setUsage(android.media.AudioAttributes.USAGE_ALARM).setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH).build())
         tts?.language = Locale.getDefault()
         tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(id: String?) {}
