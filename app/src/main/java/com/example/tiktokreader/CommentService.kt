@@ -19,8 +19,10 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
         // Если читает лишнее или пропускает - меняй эти числа.
         const val TOP_MIN = 0.40f   // ниже 40% высоты
         const val RIGHT_MAX = 0.80f // левее 80% ширины
-        
-        val SKIP_WORDS = listOf("присоедин", "joined", "вошел в", "вошёл в", "зашел в", "зашёл в")
+
+        // Если в тексте есть любое из этих слов - он не читается (системные сообщения)
+        val SKIP_WORDS = listOf("присоедин", "joined", "вошел", "вошёл", "зашел", "зашёл", "вступил")
+
         val BLACKLIST = setOf(
             "подписаться", "follow", "share", "поделиться", "live", "комментарий",
             "добавить комментарий", "add comment", "say something...", "gift", "подарок"
@@ -38,6 +40,7 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         ready = status == TextToSpeech.SUCCESS
+        // Голос идёт по каналу будильника: громкость отдельная от TikTok (медиа)
         tts?.setAudioAttributes(android.media.AudioAttributes.Builder().setUsage(android.media.AudioAttributes.USAGE_ALARM).setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH).build())
         tts?.language = Locale.getDefault()
         tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -99,7 +102,7 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (t.all { it.isDigit() || !it.isLetterOrDigit() }) return false
         if (t.lowercase() in BLACKLIST) return false
         val low = t.lowercase()
-        if (SKIP_WORDS.any { low.contains(it) }) return false
+        if (SKIP_WORDS.any { low.contains(it) }) return false // "вошёл в чат" и т.п.
         return true
     }
 
