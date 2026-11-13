@@ -21,7 +21,7 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
         const val RIGHT_MAX = 0.80f // левее 80% ширины
 
         // Если в тексте есть любое из этих слов - он не читается (системные сообщения)
-        val SKIP_WORDS = listOf("присоедин", "joined", "вошел", "вошёл", "зашел", "зашёл", "вступил")
+        val SKIP_WORDS = listOf("присоедин", "joined", "вошел", "вошёл", "зашел", "зашёл", "вступил", "с нами", "подарил", "подарок", "отправил", "поделил", "shared", "поставил лайк", "поставила лайк", "liked", "подписался на", "подписалась на", "followed")
 
         val BLACKLIST = setOf(
             "подписаться", "follow", "share", "поделиться", "live", "комментарий",
