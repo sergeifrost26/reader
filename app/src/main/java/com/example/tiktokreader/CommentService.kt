@@ -83,7 +83,9 @@ class CommentService : AccessibilityService(), TextToSpeech.OnInitListener {
             if (pending > 6) { tts?.stop(); pending = 0 } // не копим очередь
             pending++
             tts?.setSpeechRate(rate)
-            tts?.speak(line, TextToSpeech.QUEUE_ADD, null, "c${System.nanoTime()}")
+            val params = android.os.Bundle()
+            params.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, android.media.AudioManager.STREAM_ALARM)
+            tts?.speak(line, TextToSpeech.QUEUE_ADD, params, "c${System.nanoTime()}")
         }
     }
 
